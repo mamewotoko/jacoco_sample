@@ -4,6 +4,11 @@ import java.util.List;
 
 public class Util {
 	static
+	public void insertItem(List<Comparable> lst, Comparable item) {
+		insertItem(lst, item, 0, lst.size()-1);
+	}
+
+	static
 	public void insertItem(List<Comparable> lst, Comparable item, int from, int to) {
 		if(lst.size() == 0){
 			lst.add(item);

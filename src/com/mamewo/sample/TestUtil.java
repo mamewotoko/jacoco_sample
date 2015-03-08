@@ -30,7 +30,7 @@ public class TestUtil {
 		List<Comparable> lst = new ArrayList<Comparable>();
 		for(int v: data){
 			//TODO:
-			Util.insertItem(lst, Integer.valueOf(v), 0, lst.size()-1);
+			Util.insertItem(lst, Integer.valueOf(v));
 			//System.out.println(lst.toString());
 		}
 		assertTrue("sorted", sortedList(lst));
@@ -43,7 +43,7 @@ public class TestUtil {
 		List<Comparable> lst = new LinkedList<Comparable>();
 		for(int v: data){
 			//TODO:
-			Util.insertItem(lst, Integer.valueOf(v), 0, lst.size()-1);
+			Util.insertItem(lst, Integer.valueOf(v));
 			//System.out.println(lst.toString());
 		}
 		assertTrue("sorted", sortedList(lst));
