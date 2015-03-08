@@ -1,0 +1,86 @@
+<project name="jacoco_sample" default="build" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
+    <description>
+      jacoco_sample
+    </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+
+  <!-- jacoco -->
+  <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+    <classpath path="coveragelib/lib/jacocoant.jar"/>
+  </taskdef>
+  <!-- /jacoco -->
+  
+  <path id="proj.classpath">
+    <pathelement path="lib/hamcrest-core-1.3.jar"/>
+    <pathelement path="lib/junit-4.12.jar"/>
+    <pathelement path="${build}"/>
+  </path>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="init"
+        description="compile the source " >
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" destdir="${build}" debug="on">
+      <classpath refid="proj.classpath"/>
+    </javac>
+  </target>
+
+  <target name="build" depends="compile"
+        description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}/lib"/>
+
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <jar jarfile="${dist}/lib/jacoco_sample.jar" basedir="${build}"/>
+  </target>
+
+  <target name="test">
+    <mkdir dir="junit" />
+    <mkdir dir="junit/html" />
+    <jacoco:coverage>
+      <junit fork="yes" printsummary="on" showoutput="yes">
+	<test name="com.mamewo.sample.TestUtil" todir="junit" />
+	<classpath refid="proj.classpath"/>
+	<formatter type="xml" />
+      </junit>
+    </jacoco:coverage>
+
+    <jacoco:report>
+      <executiondata>
+	<file file="jacoco.exec"/>
+      </executiondata>
+      <structure name="Util">
+	<classfiles>
+	  <fileset dir="build"/>
+	</classfiles>
+	<sourcefiles encoding="UTF-8">
+	  <fileset dir="src"/>
+	</sourcefiles>
+      </structure>
+      <html destdir="coverage_report" />
+    </jacoco:report>
+
+    <junitreport todir="junit/html">
+      <fileset dir="junit">
+	<include name="TEST-*.xml"/>
+      </fileset>
+      <report format="frames" todir="junit/html" />
+    </junitreport>
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>
