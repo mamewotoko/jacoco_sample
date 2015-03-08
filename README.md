@@ -1,5 +1,6 @@
 jacoco example
 ==============
+sample project of jacoco, java coverage library
 
 Build and run
 -------------
@@ -8,6 +9,10 @@ Build and run
 ant build test
 ```
 2. browse coverage_report/index.thml
+
+References
+----------
+* JaCoCo: http://www.eclemma.org/jacoco/
 
 ----
 Takashi Masuyama <mamewotoko@gmail.com>
